@@ -1,0 +1,37 @@
+# Pipeline de vérification du module Terraform naming.
+#
+# Dépôt autonome : pas de backend, pas d'environnement Azure à provisionner.
+# Les jobs tournent donc sur toute branche/MR sans auth OIDC, contrairement
+# aux pipelines des dépôts consommateurs (layers).
+
+stages:
+  - quality
+
+default:
+  image: hashicorp/terraform:1.9
+
+variables:
+  TF_IN_AUTOMATION: "true"
+  TF_CLI_ARGS: "-no-color"
+  TF_PLUGIN_CACHE_DIR: "${CI_PROJECT_DIR}/.terraform.d/plugin-cache"
+
+cache:
+  key:
+    files: [".terraform.lock.hcl"]
+  paths:
+    - .terraform.d/plugin-cache
+
+fmt-check:
+  stage: quality
+  needs: []
+  script:
+    - terraform fmt -check -diff -recursive .
+
+validate:
+  stage: quality
+  needs: []
+  before_script:
+    - mkdir -p "${TF_PLUGIN_CACHE_DIR}"
+    - terraform init
+  script:
+    - terraform validate

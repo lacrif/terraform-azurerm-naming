@@ -47,11 +47,7 @@ Other advanced usages will be explained in the [Advanced usage](#advanced-usage)
 
 ## Modifying resources
 
-The resources are automatically generated using `go` to change the generation please change the file on the `templates` folder. To add a new resource, including its definition in the file `resourceDefinition.json`, and it will be automatically generated when `main.go` is run.
-
-## Current implementation
-
-You can find a list bellow of all the resources that are currently implemented. To get a list of the ones that are missing implementation you can check at [Missing resources](docs/missing_resources.md) the resources that have no documentation about their limitation on naming currently on Microsoft docs are on the [Not defined](docs/not_defined.md) list.
+The resources are defined directly in `main.tf`, `outputs.tf` and `variables.tf`. To add or modify a resource, edit these files by hand following the pattern of the existing resources.
 
 ## Advanced usage
 
