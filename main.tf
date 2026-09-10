@@ -1138,6 +1138,16 @@ locals {
       scope       = "region"
       regex       = "^[a-z][a-z0-9]+$"
     }
+    federated_identity_credential = {
+      name        = substr(join("-", compact([local.prefix, "fic", local.suffix])), 0, 120)
+      name_unique = substr(join("-", compact([local.prefix, "fic", local.suffix_unique])), 0, 120)
+      dashes      = true
+      slug        = "fic"
+      min_length  = 3
+      max_length  = 120
+      scope       = "parent"
+      regex       = "^[a-zA-Z0-9][a-zA-Z0-9-_]+$"
+    }
     firewall = {
       name        = substr(join("-", compact([local.prefix, "fw", local.suffix])), 0, 80)
       name_unique = substr(join("-", compact([local.prefix, "fw", local.suffix_unique])), 0, 80)
@@ -3459,6 +3469,10 @@ locals {
     fabric_capacity = {
       valid_name        = length(regexall(local.az.fabric_capacity.regex, local.az.fabric_capacity.name)) > 0 && length(local.az.fabric_capacity.name) > local.az.fabric_capacity.min_length
       valid_name_unique = length(regexall(local.az.fabric_capacity.regex, local.az.fabric_capacity.name_unique)) > 0
+    }
+    federated_identity_credential = {
+      valid_name        = length(regexall(local.az.federated_identity_credential.regex, local.az.federated_identity_credential.name)) > 0 && length(local.az.federated_identity_credential.name) > local.az.federated_identity_credential.min_length
+      valid_name_unique = length(regexall(local.az.federated_identity_credential.regex, local.az.federated_identity_credential.name_unique)) > 0
     }
     firewall = {
       valid_name        = length(regexall(local.az.firewall.regex, local.az.firewall.name)) > 0 && length(local.az.firewall.name) > local.az.firewall.min_length

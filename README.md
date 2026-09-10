@@ -10,7 +10,7 @@ example for `azurerm_resource_group` you can use :
 
 ```tf
 module "naming" {
-  source  = "git::https://gitlab.tech.orange/m2c-azure-falco/terraform-azurerm-naming.git?ref=0.1.0"
+  source  = "git::https://gitlab.tech.orange/m2c-azure-falco/terraform-azurerm-naming.git?ref=0.1.2"
   suffix = [ "test" ]
 }
 resource "azurerm_resource_group" "example" {
@@ -23,7 +23,7 @@ if you want this to be unique for this module and not shared with other instance
 
 ```tf
 module "naming" {
-  source  = "git::https://gitlab.tech.orange/m2c-azure-falco/terraform-azurerm-naming.git?ref=0.1.0"
+  source  = "git::https://gitlab.tech.orange/m2c-azure-falco/terraform-azurerm-naming.git?ref=0.1.2"
   suffix = [ "test" ]
 }
 resource "azurerm_resource_group" "example" {
@@ -228,6 +228,7 @@ No modules.
 | <a name="output_express_route_circuit"></a> [express\_route\_circuit](#output\_express\_route\_circuit) | Express Route Circuit |
 | <a name="output_express_route_gateway"></a> [express\_route\_gateway](#output\_express\_route\_gateway) | Express Route Gateway |
 | <a name="output_fabric_capacity"></a> [fabric\_capacity](#output\_fabric\_capacity) | Fabric Capacity |
+| <a name="output_federated_identity_credential"></a> [federated\_identity\_credential](#output\_federated\_identity\_credential) | Federated Identity Credential |
 | <a name="output_firewall"></a> [firewall](#output\_firewall) | Firewall |
 | <a name="output_firewall_application_rule_collection"></a> [firewall\_application\_rule\_collection](#output\_firewall\_application\_rule\_collection) | Firewall Application Rule Collection |
 | <a name="output_firewall_ip_configuration"></a> [firewall\_ip\_configuration](#output\_firewall\_ip\_configuration) | Firewall Ip Configuration |

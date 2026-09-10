@@ -556,6 +556,11 @@ output "fabric_capacity" {
   description = "Fabric Capacity"
 }
 
+output "federated_identity_credential" {
+  value       = local.az.federated_identity_credential
+  description = "Federated Identity Credential"
+}
+
 output "firewall" {
   value       = local.az.firewall
   description = "Firewall"
@@ -1495,5 +1500,4 @@ output "windows_virtual_machine_scale_set" {
   value       = local.az.windows_virtual_machine_scale_set
   description = "Windows Virtual Machine Scale Set"
 }
-
 
