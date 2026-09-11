@@ -163,6 +163,7 @@ No modules.
 | <a name="output_container_app_job"></a> [container\_app\_job](#output\_container\_app\_job) | Container App Job |
 | <a name="output_container_group"></a> [container\_group](#output\_container\_group) | Container Group |
 | <a name="output_container_registry"></a> [container\_registry](#output\_container\_registry) | Container Registry |
+| <a name="output_container_registry_task"></a> [container\_registry\_task](#output\_container\_registry\_task) | Container Registry Task |
 | <a name="output_container_registry_webhook"></a> [container\_registry\_webhook](#output\_container\_registry\_webhook) | Container Registry Webhook |
 | <a name="output_cosmosdb_account"></a> [cosmosdb\_account](#output\_cosmosdb\_account) | Cosmosdb Account |
 | <a name="output_cosmosdb_cassandra"></a> [cosmosdb\_cassandra](#output\_cosmosdb\_cassandra) | Cosmosdb Cassandra |
@@ -288,6 +289,7 @@ No modules.
 | <a name="output_monitor_data_collection_endpoint"></a> [monitor\_data\_collection\_endpoint](#output\_monitor\_data\_collection\_endpoint) | Monitor Data Collection Endpoint |
 | <a name="output_monitor_data_collection_rule"></a> [monitor\_data\_collection\_rule](#output\_monitor\_data\_collection\_rule) | Monitor Data Collection Rule |
 | <a name="output_monitor_diagnostic_setting"></a> [monitor\_diagnostic\_setting](#output\_monitor\_diagnostic\_setting) | Monitor Diagnostic Setting |
+| <a name="output_monitor_metric_alert"></a> [monitor\_metric\_alert](#output\_monitor\_metric\_alert) | Monitor Metric Alert |
 | <a name="output_monitor_scheduled_query_rules_alert"></a> [monitor\_scheduled\_query\_rules\_alert](#output\_monitor\_scheduled\_query\_rules\_alert) | Monitor Scheduled Query Rules Alert |
 | <a name="output_mssql_database"></a> [mssql\_database](#output\_mssql\_database) | Mssql Database |
 | <a name="output_mssql_elasticpool"></a> [mssql\_elasticpool](#output\_mssql\_elasticpool) | Mssql Elasticpool |
@@ -324,6 +326,7 @@ No modules.
 | <a name="output_private_dns_srv_record"></a> [private\_dns\_srv\_record](#output\_private\_dns\_srv\_record) | Private Dns Srv Record |
 | <a name="output_private_dns_txt_record"></a> [private\_dns\_txt\_record](#output\_private\_dns\_txt\_record) | Private Dns Txt Record |
 | <a name="output_private_dns_zone"></a> [private\_dns\_zone](#output\_private\_dns\_zone) | Private Dns Zone |
+| <a name="output_private_dns_zone_virtual_network_link"></a> [private\_dns\_zone\_virtual\_network\_link](#output\_private\_dns\_zone\_virtual\_network\_link) | Private Dns Zone Virtual Network Link |
 | <a name="output_private_dns_zone_group"></a> [private\_dns\_zone\_group](#output\_private\_dns\_zone\_group) | Private Dns Zone Group |
 | <a name="output_private_endpoint"></a> [private\_endpoint](#output\_private\_endpoint) | Private Endpoint |
 | <a name="output_private_link_service"></a> [private\_link\_service](#output\_private\_link\_service) | Private Link Service |
@@ -335,6 +338,7 @@ No modules.
 | <a name="output_recovery_services_vault"></a> [recovery\_services\_vault](#output\_recovery\_services\_vault) | Recovery Services Vault |
 | <a name="output_redhat_openshift_cluster"></a> [redhat\_openshift\_cluster](#output\_redhat\_openshift\_cluster) | Redhat Openshift Cluster |
 | <a name="output_redis_cache"></a> [redis\_cache](#output\_redis\_cache) | Redis Cache |
+| <a name="output_redis_enterprise"></a> [redis\_enterprise](#output\_redis\_enterprise) | Redis Enterprise |
 | <a name="output_redis_firewall_rule"></a> [redis\_firewall\_rule](#output\_redis\_firewall\_rule) | Redis Firewall Rule |
 | <a name="output_relay_hybrid_connection"></a> [relay\_hybrid\_connection](#output\_relay\_hybrid\_connection) | Relay Hybrid Connection |
 | <a name="output_relay_namespace"></a> [relay\_namespace](#output\_relay\_namespace) | Relay Namespace |

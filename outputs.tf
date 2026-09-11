@@ -226,6 +226,11 @@ output "container_registry_webhook" {
   description = "Container Registry Webhook"
 }
 
+output "container_registry_task" {
+  value       = local.az.container_registry_task
+  description = "Container Registry Task"
+}
+
 output "cosmosdb_account" {
   value       = local.az.cosmosdb_account
   description = "Cosmosdb Account"
@@ -861,6 +866,11 @@ output "monitor_diagnostic_setting" {
   description = "Monitor Diagnostic Setting"
 }
 
+output "monitor_metric_alert" {
+  value       = local.az.monitor_metric_alert
+  description = "Monitor Metric Alert"
+}
+
 output "monitor_scheduled_query_rules_alert" {
   value       = local.az.monitor_scheduled_query_rules_alert
   description = "Monitor Scheduled Query Rules Alert"
@@ -1041,6 +1051,11 @@ output "private_dns_zone" {
   description = "Private Dns Zone"
 }
 
+output "private_dns_zone_virtual_network_link" {
+  value       = local.az.private_dns_zone_virtual_network_link
+  description = "Private Dns Zone Virtual Network Link"
+}
+
 output "private_dns_zone_group" {
   value       = local.az.private_dns_zone_group
   description = "Private Dns Zone Group"
@@ -1094,6 +1109,11 @@ output "redhat_openshift_cluster" {
 output "redis_cache" {
   value       = local.az.redis_cache
   description = "Redis Cache"
+}
+
+output "redis_enterprise" {
+  value       = local.az.redis_enterprise
+  description = "Redis Enterprise"
 }
 
 output "redis_firewall_rule" {
@@ -1500,4 +1520,3 @@ output "windows_virtual_machine_scale_set" {
   value       = local.az.windows_virtual_machine_scale_set
   description = "Windows Virtual Machine Scale Set"
 }
-

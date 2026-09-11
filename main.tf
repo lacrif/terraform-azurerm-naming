@@ -478,6 +478,16 @@ locals {
       scope       = "resourceGroup"
       regex       = "^[a-zA-Z0-9]+$"
     }
+    container_registry_task = {
+      name        = substr(join("-", compact([local.prefix, "acrt", local.suffix])), 0, 50)
+      name_unique = substr(join("-", compact([local.prefix, "acrt", local.suffix_unique])), 0, 50)
+      dashes      = true
+      slug        = "acrt"
+      min_length  = 5
+      max_length  = 50
+      scope       = "containerRegistry"
+      regex       = "^[a-zA-Z0-9][a-zA-Z0-9_-]+[a-zA-Z0-9]$"
+    }
     cosmosdb_account = {
       name        = substr(join("-", compact([local.prefix, "cosmos", local.suffix])), 0, 63)
       name_unique = substr(join("-", compact([local.prefix, "cosmos", local.suffix_unique])), 0, 63)
@@ -1748,6 +1758,16 @@ locals {
       scope       = "resourceGroup"
       regex       = "^[^*<>%:&?\\+\\/]+[^*<>%:&?\\+\\/ ]$"
     }
+    monitor_metric_alert = {
+      name        = substr(join("-", compact([local.prefix, "alert", local.suffix])), 0, 260)
+      name_unique = substr(join("-", compact([local.prefix, "alert", local.suffix_unique])), 0, 260)
+      dashes      = true
+      slug        = "alert"
+      min_length  = 1
+      max_length  = 260
+      scope       = "resourceGroup"
+      regex       = "^[^*#&+:<>?@%%{}\\/|]+[^*#&+:<>?@%%{}\\/| .]$"
+    }
     monitor_scheduled_query_rules_alert = {
       name        = substr(join("-", compact([local.prefix, "msqa", local.suffix])), 0, 260)
       name_unique = substr(join("-", compact([local.prefix, "msqa", local.suffix_unique])), 0, 260)
@@ -2108,6 +2128,16 @@ locals {
       scope       = "resourceGroup"
       regex       = "^[a-zA-Z0-9][a-zA-Z0-9-._]+[a-zA-Z0-9_]$"
     }
+    private_dns_zone_virtual_network_link = {
+      name        = substr(join("-", compact([local.prefix, "pdns", local.suffix])), 0, 80)
+      name_unique = substr(join("-", compact([local.prefix, "pdns", local.suffix_unique])), 0, 80)
+      dashes      = true
+      slug        = "pdns"
+      min_length  = 1
+      max_length  = 80
+      scope       = "resourceGroup"
+      regex       = "^[a-zA-Z0-9][a-zA-Z0-9-._]+[a-zA-Z0-9_]$"
+    }
     private_dns_zone_group = {
       name        = substr(join("-", compact([local.prefix, "pdnszg", local.suffix])), 0, 80)
       name_unique = substr(join("-", compact([local.prefix, "pdnszg", local.suffix_unique])), 0, 80)
@@ -2209,6 +2239,16 @@ locals {
       regex       = "^[a-zA-Z0-9][a-zA-Z0-9-_.]+[a-zA-Z0-9]$"
     }
     redis_cache = {
+      name        = substr(join("-", compact([local.prefix, "redis", local.suffix])), 0, 63)
+      name_unique = substr(join("-", compact([local.prefix, "redis", local.suffix_unique])), 0, 63)
+      dashes      = true
+      slug        = "redis"
+      min_length  = 1
+      max_length  = 63
+      scope       = "global"
+      regex       = "^[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]$"
+    }
+    redis_enterprise = {
       name        = substr(join("-", compact([local.prefix, "redis", local.suffix])), 0, 63)
       name_unique = substr(join("-", compact([local.prefix, "redis", local.suffix_unique])), 0, 63)
       dashes      = true
@@ -3206,6 +3246,10 @@ locals {
       valid_name        = length(regexall(local.az.container_registry_webhook.regex, local.az.container_registry_webhook.name)) > 0 && length(local.az.container_registry_webhook.name) > local.az.container_registry_webhook.min_length
       valid_name_unique = length(regexall(local.az.container_registry_webhook.regex, local.az.container_registry_webhook.name_unique)) > 0
     }
+    container_registry_task = {
+      valid_name        = length(regexall(local.az.container_registry_task.regex, local.az.container_registry_task.name)) > 0 && length(local.az.container_registry_task.name) >= local.az.container_registry_task.min_length
+      valid_name_unique = length(regexall(local.az.container_registry_task.regex, local.az.container_registry_task.name_unique)) > 0
+    }
     cosmosdb_account = {
       valid_name        = length(regexall(local.az.cosmosdb_account.regex, local.az.cosmosdb_account.name)) > 0 && length(local.az.cosmosdb_account.name) > local.az.cosmosdb_account.min_length
       valid_name_unique = length(regexall(local.az.cosmosdb_account.regex, local.az.cosmosdb_account.name_unique)) > 0
@@ -3714,6 +3758,10 @@ locals {
       valid_name        = length(regexall(local.az.monitor_diagnostic_setting.regex, local.az.monitor_diagnostic_setting.name)) > 0 && length(local.az.monitor_diagnostic_setting.name) > local.az.monitor_diagnostic_setting.min_length
       valid_name_unique = length(regexall(local.az.monitor_diagnostic_setting.regex, local.az.monitor_diagnostic_setting.name_unique)) > 0
     }
+    monitor_metric_alert = {
+      valid_name        = length(regexall(local.az.monitor_metric_alert.regex, local.az.monitor_metric_alert.name)) > 0 && length(local.az.monitor_metric_alert.name) >= local.az.monitor_metric_alert.min_length
+      valid_name_unique = length(regexall(local.az.monitor_metric_alert.regex, local.az.monitor_metric_alert.name_unique)) > 0
+    }
     monitor_scheduled_query_rules_alert = {
       valid_name        = length(regexall(local.az.monitor_scheduled_query_rules_alert.regex, local.az.monitor_scheduled_query_rules_alert.name)) > 0 && length(local.az.monitor_scheduled_query_rules_alert.name) > local.az.monitor_scheduled_query_rules_alert.min_length
       valid_name_unique = length(regexall(local.az.monitor_scheduled_query_rules_alert.regex, local.az.monitor_scheduled_query_rules_alert.name_unique)) > 0
@@ -3858,6 +3906,10 @@ locals {
       valid_name        = length(regexall(local.az.private_dns_zone.regex, local.az.private_dns_zone.name)) > 0 && length(local.az.private_dns_zone.name) > local.az.private_dns_zone.min_length
       valid_name_unique = length(regexall(local.az.private_dns_zone.regex, local.az.private_dns_zone.name_unique)) > 0
     }
+    private_dns_zone_virtual_network_link = {
+      valid_name        = length(regexall(local.az.private_dns_zone_virtual_network_link.regex, local.az.private_dns_zone_virtual_network_link.name)) > 0 && length(local.az.private_dns_zone_virtual_network_link.name) >= local.az.private_dns_zone_virtual_network_link.min_length
+      valid_name_unique = length(regexall(local.az.private_dns_zone_virtual_network_link.regex, local.az.private_dns_zone_virtual_network_link.name_unique)) > 0
+    }
     private_dns_zone_group = {
       valid_name        = length(regexall(local.az.private_dns_zone_group.regex, local.az.private_dns_zone_group.name)) > 0 && length(local.az.private_dns_zone_group.name) > local.az.private_dns_zone_group.min_length
       valid_name_unique = length(regexall(local.az.private_dns_zone_group.regex, local.az.private_dns_zone_group.name_unique)) > 0
@@ -3901,6 +3953,10 @@ locals {
     redis_cache = {
       valid_name        = length(regexall(local.az.redis_cache.regex, local.az.redis_cache.name)) > 0 && length(local.az.redis_cache.name) > local.az.redis_cache.min_length
       valid_name_unique = length(regexall(local.az.redis_cache.regex, local.az.redis_cache.name_unique)) > 0
+    }
+    redis_enterprise = {
+      valid_name        = length(regexall(local.az.redis_enterprise.regex, local.az.redis_enterprise.name)) > 0 && length(local.az.redis_enterprise.name) >= local.az.redis_enterprise.min_length
+      valid_name_unique = length(regexall(local.az.redis_enterprise.regex, local.az.redis_enterprise.name_unique)) > 0
     }
     redis_firewall_rule = {
       valid_name        = length(regexall(local.az.redis_firewall_rule.regex, local.az.redis_firewall_rule.name)) > 0 && length(local.az.redis_firewall_rule.name) > local.az.redis_firewall_rule.min_length
