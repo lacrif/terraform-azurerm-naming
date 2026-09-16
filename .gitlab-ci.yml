@@ -47,7 +47,7 @@ docs-check:
   stage: quality
   needs: []
   image:
-    name: quay.io/terraform-docs/terraform-docs:0.24.0
+    name: quay.io/terraform-docs/terraform-docs:0.24.0-amd64
     entrypoint: [""]
   script:
     - terraform-docs -c .terraform-docs.yml --output-check .
