@@ -11,20 +11,33 @@ requiert ni backend Terraform ni authentification Azure.
 - `main.tf` contient les règles de nommage et les ressources `random_string`.
 - `variables.tf` expose les entrées du module.
 - `outputs.tf` expose les noms calculés par type de ressource.
-- `examples/main.tf` fournit des exemples d'utilisation locale du module.
+- `examples/main.tf` fournit des exemples d'utilisation locale du module ;
+  son contenu est aussi injecté tel quel dans le README (section `Examples`
+  générée par `terraform-docs`).
 - `README.md` contient la documentation utilisateur et les exemples de
-  consommation via le Terraform Module Registry GitLab.
-- `.gitlab-ci.yml` définit les contrôles exécutés en CI (stage `quality`)
-  ainsi que la publication du module dans le Terraform Module Registry
-  intégré du projet GitLab, déclenchée à chaque tag (stage `publish`,
-  job `publish-module`).
+  consommation via le Terraform Module Registry GitLab. Les sections entre
+  `<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->` et
+  `<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->` (Requirements, Providers,
+  Modules, Resources, Inputs, Outputs, Examples) sont générées par
+  `terraform-docs` à partir de `main.tf`/`variables.tf`/`outputs.tf` et du
+  contenu de `examples/main.tf` : ne jamais les éditer à la main, régénérer
+  avec `terraform-docs -c .terraform-docs.yml .`.
+- `.terraform-docs.yml` configure le format, le contenu (`content`, avec la
+  section `Examples` embarquant `examples/main.tf` via `include`) et les
+  marqueurs d'injection utilisés par `terraform-docs`.
+- `.gitlab-ci.yml` définit les contrôles exécutés en CI (stage `quality` :
+  formatage, `terraform validate`, vérification de la doc via
+  `terraform-docs --output-check`) ainsi que la publication du module dans
+  le Terraform Module Registry intégré du projet GitLab, déclenchée à chaque
+  tag (stage `publish`, job `publish-module`).
 
 ## Règles de modification
 
 - Préserver la compatibilité des entrées et sorties existantes, sauf demande
   explicite de changement incompatible.
 - Pour ajouter ou modifier une convention de nommage, tenir `main.tf` et
-  `outputs.tf` synchronisés, puis mettre à jour la documentation si nécessaire.
+  `outputs.tf` synchronisés, puis régénérer `README.md` avec `terraform-docs`
+  (voir `## Validation`).
 - Respecter les limites, caractères autorisés, portée d'unicité et slug propres
   à chaque ressource Azure.
 - Le module est publié dans le Terraform Module Registry intégré de ce
@@ -54,5 +67,13 @@ Lorsque `tflint` est installé, exécuter également :
 tflint --no-color
 ```
 
-`make validate` regroupe ces validations. La CI exécute le formatage et
-`terraform validate` avec Terraform 1.9.
+Pour régénérer et vérifier la documentation (`terraform-docs` doit être
+installé) :
+
+```sh
+terraform-docs -c .terraform-docs.yml .
+terraform-docs -c .terraform-docs.yml --output-check .
+```
+
+La CI exécute le formatage, `terraform validate` avec Terraform 1.9, ainsi
+que la vérification de la documentation avec `terraform-docs`.
