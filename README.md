@@ -4,13 +4,28 @@ This fork helps you keep resource names consistent across Terraform configuratio
 
 ## Usage
 
+This module is published to the [Terraform Module Registry](https://docs.gitlab.com/user/packages/terraform_module_registry/) built into this GitLab project. Each tag pushed to this repository triggers a CI job that publishes a new module version (see `.gitlab-ci.yml`).
+
+### Registry access configuration
+
+Terraform needs a GitLab token to pull modules from this internal registry. Add a `credentials` block to your `~/.terraformrc` (or `%APPDATA%\terraform.rc` on Windows):
+
+```hcl
+credentials "gitlab.tech.orange" {
+  token = "<your GitLab personal/project access token with read_api scope>"
+}
+```
+
+From a GitLab CI pipeline, use `CI_JOB_TOKEN` instead (no extra configuration needed as long as the consuming project has access to the `m2c-azure-falco` group).
+
 For every resource in `terraform_azurerm` just remove the `azurerm` part of the module and use the `name` property of this output.
 
 example for `azurerm_resource_group` you can use :
 
 ```tf
 module "naming" {
-  source  = "git::https://gitlab.tech.orange/m2c-azure-falco/terraform-azurerm-naming.git?ref=0.1.2"
+  source  = "gitlab.tech.orange/m2c-azure-falco/naming/azurerm"
+  version = "0.1.3"
   suffix = [ "test" ]
 }
 resource "azurerm_resource_group" "example" {
@@ -23,7 +38,8 @@ if you want this to be unique for this module and not shared with other instance
 
 ```tf
 module "naming" {
-  source  = "git::https://gitlab.tech.orange/m2c-azure-falco/terraform-azurerm-naming.git?ref=0.1.2"
+  source  = "gitlab.tech.orange/m2c-azure-falco/naming/azurerm"
+  version = "0.1.3"
   suffix = [ "test" ]
 }
 resource "azurerm_resource_group" "example" {

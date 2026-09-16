@@ -1,11 +1,15 @@
-# Pipeline de vérification du module Terraform naming.
+# Pipeline de vérification et de publication du module Terraform naming.
 #
 # Dépôt autonome : pas de backend, pas d'environnement Azure à provisionner.
-# Les jobs tournent donc sur toute branche/MR sans auth OIDC, contrairement
-# aux pipelines des dépôts consommateurs (layers).
+# Les jobs de la stage `quality` tournent donc sur toute branche/MR sans auth
+# OIDC, contrairement aux pipelines des dépôts consommateurs (layers).
+#
+# La stage `publish` publie le module dans le Terraform Module Registry
+# intégré de ce projet GitLab à chaque tag (voir README.md).
 
 stages:
   - quality
+  - publish
 
 default:
   image: hashicorp/terraform:1.9
@@ -14,6 +18,9 @@ variables:
   TF_IN_AUTOMATION: "true"
   TF_CLI_ARGS: "-no-color"
   TF_PLUGIN_CACHE_DIR: "${CI_PROJECT_DIR}/.terraform.d/plugin-cache"
+  TERRAFORM_MODULE_NAME: "naming"
+  TERRAFORM_MODULE_SYSTEM: "azurerm"
+  TERRAFORM_MODULE_VERSION: "${CI_COMMIT_TAG}"
 
 cache:
   key:
@@ -35,3 +42,15 @@ validate:
     - terraform init
   script:
     - terraform validate
+
+publish-module:
+  stage: publish
+  needs: []
+  image: curlimages/curl:8.10.1
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - TAR_FILENAME="/tmp/${TERRAFORM_MODULE_NAME}-${TERRAFORM_MODULE_SYSTEM}-${TERRAFORM_MODULE_VERSION}.tgz"
+    - UPLOAD_URL="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/terraform/modules/${TERRAFORM_MODULE_NAME}/${TERRAFORM_MODULE_SYSTEM}/${TERRAFORM_MODULE_VERSION}/file"
+    - tar -vczf "${TAR_FILENAME}" --exclude=./.git --exclude=./.terraform --exclude=./.agents --exclude=./.codex .
+    - 'curl --fail-with-body --location --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file "${TAR_FILENAME}" "${UPLOAD_URL}"'

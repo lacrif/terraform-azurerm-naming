@@ -13,8 +13,11 @@ requiert ni backend Terraform ni authentification Azure.
 - `outputs.tf` expose les noms calculés par type de ressource.
 - `examples/main.tf` fournit des exemples d'utilisation locale du module.
 - `README.md` contient la documentation utilisateur et les exemples de
-  consommation Git du fork.
-- `.gitlab-ci.yml` définit les contrôles exécutés en CI.
+  consommation via le Terraform Module Registry GitLab.
+- `.gitlab-ci.yml` définit les contrôles exécutés en CI (stage `quality`)
+  ainsi que la publication du module dans le Terraform Module Registry
+  intégré du projet GitLab, déclenchée à chaque tag (stage `publish`,
+  job `publish-module`).
 
 ## Règles de modification
 
@@ -24,8 +27,14 @@ requiert ni backend Terraform ni authentification Azure.
   `outputs.tf` synchronisés, puis mettre à jour la documentation si nécessaire.
 - Respecter les limites, caractères autorisés, portée d'unicité et slug propres
   à chaque ressource Azure.
-- Ne pas réintroduire de dépendance au Terraform Registry pour ce module : les
-  exemples de consommation utilisent la source Git du fork.
+- Le module est publié dans le Terraform Module Registry intégré de ce
+  projet GitLab (nom `naming`, système `azurerm`) : conserver la cohérence
+  entre `TERRAFORM_MODULE_NAME`/`TERRAFORM_MODULE_SYSTEM` dans
+  `.gitlab-ci.yml` et les exemples de source (`gitlab.tech.orange/
+  m2c-azure-falco/naming/azurerm`) documentés dans `README.md`.
+- Toute publication d'une nouvelle version se fait exclusivement via un tag
+  Git conforme au versioning sémantique (ex. `0.1.4`), qui déclenche le job
+  `publish-module`. Ne pas publier de version manuellement hors CI.
 - Ne pas modifier `.terraform.lock.hcl` sans changement intentionnel de la
   contrainte de fournisseur ou réinitialisation explicitement demandée.
 
