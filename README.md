@@ -6,18 +6,6 @@ This fork helps you keep resource names consistent across Terraform configuratio
 
 This module is published to the [Terraform Module Registry](https://docs.gitlab.com/user/packages/terraform_module_registry/) built into this GitLab project. Each tag pushed to this repository triggers a CI job that publishes a new module version (see `.gitlab-ci.yml`).
 
-### Registry access configuration
-
-Terraform needs a GitLab token to pull modules from this internal registry. Add a `credentials` block to your `~/.terraformrc` (or `%APPDATA%\terraform.rc` on Windows):
-
-```hcl
-credentials "gitlab.tech.orange" {
-  token = "<your GitLab personal/project access token with read_api scope>"
-}
-```
-
-From a GitLab CI pipeline, use `CI_JOB_TOKEN` instead (no extra configuration needed as long as the consuming project has access to the `m2c-azure-falco` group).
-
 For every resource in `terraform_azurerm` just remove the `azurerm` part of the module and use the `name` property of this output.
 
 example for `azurerm_resource_group` you can use :
@@ -54,13 +42,7 @@ Other advanced usages will be explained in the [Advanced usage](#advanced-usage)
 
 ## Prerequisites and setup
 
-- Install [tflint](https://github.com/terraform-linters/tflint) as suitable for your OS.
-
 - Install [terraform-docs](https://terraform-docs.io/user-guide/installation/) as suitable for your OS.
-
-## Modifying resources
-
-The resources are defined directly in `main.tf`, `outputs.tf` and `variables.tf`. To add or modify a resource, edit these files by hand following the pattern of the existing resources.
 
 ## Advanced usage
 
@@ -76,7 +58,7 @@ Each one of the resources emits the name of the resource and other properties:
 | slug | string | letters to identify this resource among others |
 | min_length | integer | Minimum length required for this resource name |
 | max_length | integer | Maximum length allowed for this resource name |
-| scope | string | scope which this name needs to be unique, such as `resourcegroup` or `global`  |
+| scope | string | scope which this name needs to be unique, such as `resourceGroup` or `global`  |
 | regex | string | Terraform compatible version of the regex |
 
 ### Example Output

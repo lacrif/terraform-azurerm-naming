@@ -886,7 +886,7 @@ locals {
       min_length  = 1
       max_length  = 80
       scope       = "resourceGroup"
-      regex       = "^[a-zA-Z0-9_]+$"
+      regex       = "^[a-zA-Z0-9_-]+$"
     }
     dns_a_record = {
       name        = substr(join("-", compact([local.prefix, "dnsrec", local.suffix])), 0, 80)
@@ -1385,7 +1385,7 @@ locals {
       slug        = "dps"
       min_length  = 3
       max_length  = 64
-      scope       = "resoureceGroup"
+      scope       = "resourceGroup"
       regex       = "^[a-zA-Z0-9-]+[a-zA-Z0-9]$"
     }
     iothub_dps_certificate = {
@@ -1636,7 +1636,7 @@ locals {
       min_length  = 1
       max_length  = 80
       scope       = "resourceGroup"
-      regex       = "^[a-zA-Z0-9_]+$"
+      regex       = "^[a-zA-Z0-9_-]+$"
     }
     management_group = {
       name        = substr(join("-", compact([local.prefix, "mg", local.suffix])), 0, 90)

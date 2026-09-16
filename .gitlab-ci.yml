@@ -18,8 +18,8 @@ variables:
   TF_IN_AUTOMATION: "true"
   TF_CLI_ARGS: "-no-color"
   TF_PLUGIN_CACHE_DIR: "${CI_PROJECT_DIR}/.terraform.d/plugin-cache"
-  TERRAFORM_MODULE_NAME: "naming"
-  TERRAFORM_MODULE_SYSTEM: "azurerm"
+  TERRAFORM_MODULE_NAME: "azure"
+  TERRAFORM_MODULE_SYSTEM: "naming"
   TERRAFORM_MODULE_VERSION: "${CI_COMMIT_TAG}"
 
 cache:
@@ -42,6 +42,15 @@ validate:
     - terraform init
   script:
     - terraform validate
+
+test:
+  stage: quality
+  needs: []
+  before_script:
+    - mkdir -p "${TF_PLUGIN_CACHE_DIR}"
+    - terraform init
+  script:
+    - terraform test
 
 docs-check:
   stage: quality
