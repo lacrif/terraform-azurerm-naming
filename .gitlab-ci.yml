@@ -12,7 +12,7 @@ stages:
   - publish
 
 default:
-  image: hashicorp/terraform:1.9
+  image: hashicorp/terraform:1.16
 
 variables:
   TF_IN_AUTOMATION: "true"
