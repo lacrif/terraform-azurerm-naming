@@ -46,8 +46,9 @@ validate:
 docs-check:
   stage: quality
   needs: []
-  image: quay.io/terraform-docs/terraform-docs:0.24.0
-  entrypoint: [""]
+  image:
+    name: quay.io/terraform-docs/terraform-docs:0.24.0
+    entrypoint: [""]
   script:
     - terraform-docs -c .terraform-docs.yml --output-check .
 
