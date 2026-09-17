@@ -6,6 +6,8 @@ This fork helps you keep resource names consistent across Terraform configuratio
 
 This module is published to the [Terraform Module Registry](https://docs.gitlab.com/user/packages/terraform_module_registry/) built into this GitLab project. Each tag pushed to this repository triggers a CI job that publishes a new module version (see `.gitlab-ci.yml`).
 
+On the GitHub mirror, the module is also published to the public [Terraform Registry](https://registry.terraform.io). The registry itself follows semantic-versioned tags once the repository has been connected once via GitHub OAuth (see `CONTRIBUTING.md`); the `release` job in `.github/workflows/ci.yml` only creates the matching GitHub Release for each tag.
+
 For every resource in `terraform_azurerm` just remove the `azurerm` part of the module and use the `name` property of this output.
 
 example for `azurerm_resource_group` you can use :

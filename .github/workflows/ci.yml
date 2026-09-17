@@ -1,15 +1,25 @@
-# Pipeline de vérification équivalent à .gitlab-ci.yml (stage `quality`).
+# Pipeline de vérification équivalent à .gitlab-ci.yml (stage `quality`),
+# complété par la publication vers le Registre Terraform public côté GitHub.
 #
 # Le job `publish-module` de .gitlab-ci.yml n'est pas repris ici : il publie
 # le module dans le Terraform Module Registry intégré de GitLab via
 # CI_JOB_TOKEN/CI_API_V4_URL, une API propre à GitLab sans équivalent direct
 # côté GitHub Actions.
+#
+# Le Registre Terraform public (registry.terraform.io) n'expose pas d'API de
+# publication : une fois ce dépôt connecté (une seule fois, via OAuth GitHub
+# sur registry.terraform.io, cf. CONTRIBUTING.md), il republie automatiquement
+# une nouvelle version du module à chaque tag Git conforme au versioning
+# sémantique. Le job `release` ci-dessous se contente donc de créer la
+# GitHub Release correspondant au tag, que le registre affiche comme notes
+# de version.
 
 name: CI
 
 on:
   push:
     branches: ["**"]
+    tags: ["*"]
   pull_request:
 
 jobs:
@@ -52,3 +62,16 @@ jobs:
       - uses: actions/checkout@v4
       - name: terraform-docs --output-check
         run: terraform-docs -c .terraform-docs.yml --output-check .
+
+  release:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: []
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" --title "${GITHUB_REF_NAME}" --generate-notes
