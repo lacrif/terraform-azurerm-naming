@@ -14,8 +14,8 @@ example for `azurerm_resource_group` you can use :
 
 ```tf
 module "naming" {
-  source  = "gitlab.tech.orange/m2c-azure-falco/naming/azurerm"
-  version = "0.1.4"
+  source  = "<source>/naming/azurerm"
+  version = "X.Y.Z"
   suffix = [ "test" ]
 }
 resource "azurerm_resource_group" "example" {
@@ -28,8 +28,8 @@ if you want this to be unique for this module and not shared with other instance
 
 ```tf
 module "naming" {
-  source  = "gitlab.tech.orange/m2c-azure-falco/naming/azurerm"
-  version = "0.1.4"
+  source  = "<source>/naming/azurerm"
+  version = "X.Y.Z"
   suffix = [ "test" ]
 }
 resource "azurerm_resource_group" "example" {
