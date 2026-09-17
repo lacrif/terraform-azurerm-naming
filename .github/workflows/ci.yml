@@ -1,0 +1,54 @@
+# Pipeline de vérification équivalent à .gitlab-ci.yml (stage `quality`).
+#
+# Le job `publish-module` de .gitlab-ci.yml n'est pas repris ici : il publie
+# le module dans le Terraform Module Registry intégré de GitLab via
+# CI_JOB_TOKEN/CI_API_V4_URL, une API propre à GitLab sans équivalent direct
+# côté GitHub Actions.
+
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  fmt-check:
+    runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform:1.16
+    steps:
+      - uses: actions/checkout@v4
+      - name: terraform fmt -check
+        run: terraform fmt -check -diff -recursive .
+
+  validate:
+    runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform:1.16
+    steps:
+      - uses: actions/checkout@v4
+      - name: terraform init
+        run: terraform init
+      - name: terraform validate
+        run: terraform validate -no-color
+
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform:1.16
+    steps:
+      - uses: actions/checkout@v4
+      - name: terraform init
+        run: terraform init
+      - name: terraform test
+        run: terraform test
+
+  docs-check:
+    runs-on: ubuntu-latest
+    container:
+      image: quay.io/terraform-docs/terraform-docs:0.24.0-amd64
+    steps:
+      - uses: actions/checkout@v4
+      - name: terraform-docs --output-check
+        run: terraform-docs -c .terraform-docs.yml --output-check .
